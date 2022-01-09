@@ -1,5 +1,6 @@
 import { getToken, setToken, removeToken, setTimeStamps } from '@/utils/auth'
 import { login, getInfo, getBaeInfoById } from '@/api/user'
+import { resetRouter } from '@/router/index'
 
 export default {
   namespaced: true,
@@ -47,6 +48,8 @@ export default {
     logout(context) {
       context.commit('removeToken')
       context.commit('removeUserInfo')
+      context.commit('permission/setRoutes', [], { root: true })
+      resetRouter()
     }
   }
 

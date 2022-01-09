@@ -39,7 +39,7 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="showRole(row.id)">角色</el-button>
               <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -64,6 +64,8 @@
     </el-dialog>
     <!-- 放置新增组件 -->
     <add-employee :show-dialog.sync="showDialog" />
+    <!-- 显示角色弹层 -->
+    <assign-role ref="assignRole" :show-role-diglog.sync="showRoleDiglog" :user-id="userid" />
   </div>
 </template>
 
@@ -73,9 +75,11 @@ import EmployeeEnum from '@/api/constant/employees'
 import AddEmployee from './components/add-employee.vue'
 import { formatDate } from '@/filters'
 import QrCode from 'qrcode'
+import AssignRole from './components/assign-role'
 export default {
   components: {
-    AddEmployee
+    AddEmployee,
+    AssignRole
   },
   data() {
     return {
@@ -87,7 +91,9 @@ export default {
         total: 0 // 总数
       },
       showDialog: false, // 默认是关闭的弹层
-      showQrCode: false
+      showQrCode: false,
+      showRoleDiglog: false,
+      userid: ''
 
     }
   },
@@ -95,6 +101,12 @@ export default {
     this.getEmployeeList()
   },
   methods: {
+    // 点击角色按钮
+    async showRole(id) {
+      this.userid = id
+      await this.$refs.assignRole.getUserDetailById(id)
+      this.showRoleDiglog = true
+    },
     // 点击图片展示二维码
     showQr(url) {
       this.showQrCode = true

@@ -8,9 +8,10 @@
     <!-- <breadcrumb class="breadcrumb-container" /> -->
 
     <div class="right-menu">
+      <lang-select class="right-menu-item" />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img v-imagerror="defaultImg" src="staffPhoto" class="user-avatar">
+          <img v-imagerror="defaultImg" :src="staffPhoto" class="user-avatar">
           <span>{{ name }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
@@ -126,7 +127,9 @@ export default {
       height: 100%;
       font-size: 18px;
       color: #5a5e66;
-      vertical-align: text-bottom;
+      vertical-align: middle;
+      margin-right: 5px;
+      margin-top: -10px;
 
       &.hover-effect {
         cursor: pointer;

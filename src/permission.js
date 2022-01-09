@@ -12,8 +12,13 @@ router.beforeEach(async(to, from, next) => {
       next('/')
     } else { // 有token，去非登陆页
       if (!store.getters.userId) {
-        console.log('刷新会经过这')
-        await store.dispatch('user/getInfo') // 获取资料
+        const { roles: { menus }} = await store.dispatch('user/getInfo') // 获取资料
+        console.log(menus, '111')
+        const routes = await store.dispatch('permission/filterRoutes', menus)
+
+        router.addRoutes([...routes, { path: '*', redirect: '/404', hidden: true }])
+
+        next(to.path)
       }
       next()
     }
@@ -25,7 +30,6 @@ router.beforeEach(async(to, from, next) => {
     }
   }
   NProgress.done()
-  console.log(123)
 })
 
 // 后置守卫
