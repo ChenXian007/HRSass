@@ -31,7 +31,7 @@ export default {
     }
   },
   methods: {
-    generateData({ header, results }) {
+    generateData({ header, results }) { // 4
       this.excelData.header = header
       this.excelData.results = results
 
@@ -63,13 +63,15 @@ export default {
     handleUpload() {
       this.$refs['excel-upload-input'].click()
     },
-    handleClick(e) {
+    handleClick(e) { // 1
       const files = e.target.files
       const rawFile = files[0] // only use files[0]
-      if (!rawFile) return
+      if (!rawFile) {
+        return
+      }
       this.upload(rawFile)
     },
-    upload(rawFile) {
+    upload(rawFile) { // 2
       this.$refs['excel-upload-input'].value = null // fix can't select the same excel
       if (!this.beforeUpload) {
         this.readerData(rawFile)
@@ -80,7 +82,7 @@ export default {
         this.readerData(rawFile)
       }
     },
-    readerData(rawFile) {
+    readerData(rawFile) { // 3
       this.loading = true
       return new Promise((resolve, reject) => {
         const reader = new FileReader()

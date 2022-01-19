@@ -54,7 +54,7 @@ export default {
       this.fileList = this.fileList.filter(v => {
         return file.uid !== v.uid
       })
-      console.log(file)
+      console.log(file, file.name)
     // 删除腾讯云
     //   cos.deleteObject({
     //     Bucket: 'xiaohupo-007-1309004288', /* 填入您自己的存储桶，必须字段 */
@@ -102,6 +102,7 @@ export default {
             this.percent = progressData.percent * 100
           }
         }, (err, data) => {
+          console.log(data)
           if (!err && data.statusCode === 200) {
             this.fileList = this.fileList.map(item => {
               if (item.uid === this.uid) {
